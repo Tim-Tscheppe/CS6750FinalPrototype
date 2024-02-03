@@ -1,6 +1,8 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
+from water_haptic_feedback import *
+
 class AppleWatchSimulator:
     def __init__(self, root):
         self.root = root
@@ -28,7 +30,9 @@ class AppleWatchSimulator:
         return ImageTk.PhotoImage(Image.open(path))
 
     def enter_water_mode(self):
-        # Load water mode image
+        
+        water_haptic_feedback()
+
         water_mode_image = self.load_image("images/water_mode.png")
         self.current_screen_label.config(image=water_mode_image)
         self.current_screen = water_mode_image
