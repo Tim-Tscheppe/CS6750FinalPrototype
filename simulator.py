@@ -3,20 +3,22 @@ from PIL import Image, ImageTk
 
 from water_haptic_feedback import *
 
+'''
+This is an implementation of the "Apple Watch Simulator" class.
+We can cycle between different modes and show the concepts
+that I designed during my project on the Apple Watch.
+'''
+
 class AppleWatchSimulator:
     def __init__(self, root):
         self.root = root
         self.root.title("Apple Watch Simulator")
         self.root.geometry("1600x1400")
-
         self.current_screen = None
-
-        # Load main watch face image
         self.main_watch_image = self.load_image("images/MainFace.png")
         self.current_screen_label = tk.Label(root, image=self.main_watch_image)
         self.current_screen_label.pack()
 
-        # Buttons
         self.enter_water_button = tk.Button(root, text="Enter Water Mode", command=self.enter_water_mode)
         self.enter_water_button.pack()
 
@@ -39,6 +41,7 @@ class AppleWatchSimulator:
         self.water_mode = True
 
     def tap_side_crown(self):
+
         if self.water_mode:
             tap_side_crown_image = self.load_image("images/ExitWaterMode.png")
             self.current_screen_label.config(image=tap_side_crown_image)
