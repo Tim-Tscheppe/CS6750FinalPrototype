@@ -7,12 +7,12 @@ class AppleWatchSimulator:
     def __init__(self, root):
         self.root = root
         self.root.title("Apple Watch Simulator")
-        self.root.geometry("400x300")
+        self.root.geometry("1600x1400")
 
         self.current_screen = None
 
         # Load main watch face image
-        self.main_watch_image = self.load_image("images/main_watch_face.png")
+        self.main_watch_image = self.load_image("images/MainFace.png")
         self.current_screen_label = tk.Label(root, image=self.main_watch_image)
         self.current_screen_label.pack()
 
@@ -33,22 +33,26 @@ class AppleWatchSimulator:
         
         water_haptic_feedback()
 
-        water_mode_image = self.load_image("images/water_mode.png")
+        water_mode_image = self.load_image("images/WaterMode.png")
+        self.current_screen_label.config(image=water_mode_image)
+        self.current_screen = water_mode_image
+        self.water_mode = True
+
+    def tap_side_crown(self):
+        if self.water_mode:
+            tap_side_crown_image = self.load_image("images/ExitWaterMode.png")
+            self.current_screen_label.config(image=tap_side_crown_image)
+            self.current_screen = tap_side_crown_image
+            self.root.after(3000, self.return_to_water_face)
+    
+    def return_to_water_face(self):
+        water_mode_image = self.load_image("images/WaterMode.png")
         self.current_screen_label.config(image=water_mode_image)
         self.current_screen = water_mode_image
 
-    def tap_side_crown(self):
-        # TODO: Get this to only work if water mode is active
-        tap_side_crown_image = self.load_image("images/tap_side_crown.png")
-        self.current_screen_label.config(image=tap_side_crown_image)
-        self.root.after(5000, lambda: self.return_to_water_mode(self.current_screen))
-
-    def return_to_water_mode(self, previous_image):
-        self.current_screen_label.config(image=previous_image)
-
     def hold_side_crown(self):
-        # Load main watch face image
         self.current_screen_label.config(image=self.main_watch_image)
+        self.water_mode = False
 
 if __name__ == "__main__":
     root = tk.Tk()
